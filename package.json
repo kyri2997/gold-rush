@@ -1,0 +1,13 @@
+{
+  "name": "gold-digger",
+  "version": "1.0.0",
+  "description": "Demo widget for getting gold prices and buying gold",
+  "main": "server.js",
+  "type":"module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Kyri",
+  "license": "ISC"
+}
