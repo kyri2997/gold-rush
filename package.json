@@ -1,5 +1,5 @@
 {
-  "name": "gold-digger",
+  "name": "gold-rush",
   "version": "1.0.0",
   "description": "Demo widget for getting gold prices and buying gold",
   "main": "server.js",
