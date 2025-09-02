@@ -1,5 +1,7 @@
 export async function GET() {
-    console.log("🔌 [SSE] Client connected")
+  console.log("🔌 [SSE] Client connected")
+
+  let interval
 
   const stream = new ReadableStream({
     start(controller) {
@@ -7,26 +9,24 @@ export async function GET() {
 
       function send(price) {
         const payload = `data: ${JSON.stringify({ event: "price-updated", price })}\n\n`
-        console.log("📤 [SSE] Sending:", payload.trim())
-
-        controller.enqueue(
-          encoder.encode(encoder.encode(payload))
-        )
+        
+        controller.enqueue(encoder.encode(payload))
       }
 
-      // send initial price
+      // initial price
       send((1800 + Math.random() * 50).toFixed(2))
 
-      // update every 2s
-      const interval = setInterval(() => {
+      // send every 2s
+      interval = setInterval(() => {
         send((1800 + Math.random() * 50).toFixed(2))
       }, 2000)
-
-      // clean up when client disconnects
-      controller.close = () => {
-        console.log("❌ [SSE] Client disconnected")
-        clearInterval(interval)}
     },
+
+    cancel(reason) {
+      // called automatically if client disconnects
+      console.log("❌ [SSE] Client disconnected", reason)
+      clearInterval(interval)
+    }
   })
 
   return new Response(stream, {
