@@ -1,5 +1,5 @@
 
-const eventSource = new EventSource("/events")
+const eventSource = new EventSource("/api/events")
 
 const trackerStatus = true
 const priceDisplayEl = document.getElementById("price-display")
