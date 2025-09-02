@@ -1,11 +1,16 @@
 export async function GET() {
+    console.log("🔌 [SSE] Client connected")
+
   const stream = new ReadableStream({
     start(controller) {
       const encoder = new TextEncoder()
 
       function send(price) {
+        const payload = `data: ${JSON.stringify({ event: "price-updated", price })}\n\n`
+        console.log("📤 [SSE] Sending:", payload.trim())
+
         controller.enqueue(
-          encoder.encode(`data: ${JSON.stringify({ price })}\n\n`)
+          encoder.encode(encoder.encode(payload))
         )
       }
 
@@ -18,7 +23,9 @@ export async function GET() {
       }, 2000)
 
       // clean up when client disconnects
-      controller.close = () => clearInterval(interval)
+      controller.close = () => {
+        console.log("❌ [SSE] Client disconnected")
+        clearInterval(interval)}
     },
   })
 

@@ -18,9 +18,10 @@ investForm.addEventListener("submit", buyGold)
 closeBtn.addEventListener("click", closeModal)
 
 if(trackerStatus){
-    
+    console.log("✅ [SSE] Connection opened")
     connectionStatusEl.textContent=`Live Price 🟢`
     eventSource.onmessage = (event) =>{
+        console.log("📩 [SSE] Message received:", event.data)
         data = JSON.parse(event.data)
         currentPrice = data.price
         priceDisplayEl.textContent= currentPrice
