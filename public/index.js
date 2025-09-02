@@ -28,14 +28,17 @@ if(trackerStatus){
     
     eventSource.onerror = () => {
         console.log('Connection failed...')
+        connectionStatusEl.textContent = "Disconnected 🔴"
+
     }
 } else {
     connectionStatusEl.textContent=`Disconnected 🔴`
 }
 
 function goldCalc(){
-    let result = 0
-    result = investedAmount.value / currentPrice
+    if (!currentPrice || currentPrice <= 0) return 0
+    let amount = parseFloat(investedAmount.value) || 0
+    let result = amount / currentPrice
     return result.toFixed(2)
 }
 
@@ -56,7 +59,7 @@ function buyGold(event){
 
     dialogBoxEl.showModal()
     investmentSummary.innerHTML=`
-     <p>You just bought ${goldCalc()}oz of gold for £${investedAmount.value}. \n You will receive documentation shortly.</p>`
+     <p>You just bought ${goldCalc()}oz of gold for £${investedAmount.value}. <br> You will receive documentation shortly.</p>`
 }
 function closeModal(event){
     event.preventDefault()
