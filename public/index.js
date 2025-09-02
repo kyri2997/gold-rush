@@ -51,14 +51,14 @@ function buyGold(event){
     fetch("/log", {method:"POST", headers:{
         "Content-Type": "application/json"}, body: JSON.stringify(data)
     })
-    .then(res=>res.json)
+    .then(res=>res.json())
     // .then(result=>)
 
     dialogBoxEl.showModal()
     investmentSummary.innerHTML=`
      <p>You just bought ${goldCalc()}oz of gold for £${investedAmount.value}. \n You will receive documentation shortly.</p>`
 }
-function closeModal(event,data){
+function closeModal(event){
     event.preventDefault()
     dialogBoxEl.close()
     investedAmount.value=""
